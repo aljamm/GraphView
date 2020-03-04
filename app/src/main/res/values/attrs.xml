@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--    <declare-styleable name="Globals">-->
+
+<!--        <attr name="title" format="string" />-->
+<!--        <attr name="yAxisText" format="string" />-->
+<!--        <attr name="xAxisText" format="string" />-->
+<!--        <attr name="secondaryDataText" format="string" />-->
+
+<!--        <attr name="graphPaddingFactor" format="integer" />-->
+<!--        <attr name="shouldDrawBorder" format="boolean" />-->
+
+<!--        <attr name="labelStyling" format="integer">-->
+<!--            <enum name="Standard" value="0" />-->
+<!--            <enum name="Unfolded" value="1" />-->
+<!--            <enum name="Custom" value="2" />-->
+<!--        </attr>-->
+
+<!--        <attr name="yAxisLabels" format="boolean" />-->
+<!--        <attr name="xAxisLabels" format="boolean" />-->
+<!--        <attr name="secondaryDataLabels" format="boolean" />-->
+<!--    </declare-styleable>-->
+    <declare-styleable name="GraphView">
+        <attr name="title" format="string"/>
+        <attr name="rightSideText" format="string"/>
+        <attr name="leftSideText" format="string"/>
+        <attr name="bottomText" format="string"/>
+
+        <attr name="axisMarginTop" format="float" />
+        <attr name="axisMarginBottom" format="float" />
+        <attr name="axisMarginLeft" format="float" />
+        <attr name="axisMarginRight" format="float" />
+
+        <attr name="graphPaddingFactor" format="float" />
+        <attr name="shouldDrawBox" format="boolean" />
+
+        <attr name="labelStyle" format="integer">
+            <enum name="Standard" value="0"/>
+            <enum name="Unfolded" value="1"/>
+            <enum name="Custom" value="2"/>
+        </attr>
+
+        <attr name="leftSideLabels" format="boolean"/>
+        <attr name="xAxisLabels" format="boolean"/>
+        <attr name="rightAxisLabels" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="LineGraph">
+        <attr name="graphPaddingFactor" />
+        <attr name="shouldDrawBorder" format="boolean" />
+    </declare-styleable>
+</resources>
