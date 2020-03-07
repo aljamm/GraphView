@@ -32,10 +32,10 @@ class GraphView(context: Context, attributeSet: AttributeSet) : FrameLayout(cont
     private val textViewXLabel07: TextView
     private val textViewXLabel08: TextView
 
-    val lineGraph: LineGraph
+    private val lineGraph: LineGraph
 
     init {
-//        isSaveEnabled = true
+        isSaveEnabled = true
         inflate(context, R.layout.graph_view_layout, this)
         textViewTitle = findViewById(R.id.textViewGraphTitle)
         textViewYAxis = findViewById(R.id.textViewYAxisLabel)
@@ -45,8 +45,8 @@ class GraphView(context: Context, attributeSet: AttributeSet) : FrameLayout(cont
         val attrs = context.obtainStyledAttributes(attributeSet, R.styleable.GraphView)
         textViewTitle.text = attrs.getText(R.styleable.GraphView_title) ?: ""
         textViewYAxis.text = "Road and Pump Load (LIP)"
-        textViewXAxis.text =  "Road and Pump Load (inch)"
-        attrs.recycle()
+        textViewXAxis.text = "Road and Pump Load (inch)"
+
 
         textViewYLabel01 = findViewById(R.id.textViewYLabel01)
         textViewYLabel02 = findViewById(R.id.textViewYLabel02)
@@ -65,24 +65,25 @@ class GraphView(context: Context, attributeSet: AttributeSet) : FrameLayout(cont
         textViewXLabel06 = findViewById(R.id.textViewXLabel06)
         textViewXLabel07 = findViewById(R.id.textViewXLabel07)
         textViewXLabel08 = findViewById(R.id.textViewXLabel08)
-
+        attrs.recycle()
     }
+
     fun addToPrimaryDataSet(dataSets: List<DataSet>) {
-       lineGraph.primaryDataSets.addAll(dataSets)
+        lineGraph.addToPrimaryDataSet(dataSets)
     }
 
 
-    override fun onRestoreInstanceState(state: Parcelable?) {
-        super.onRestoreInstanceState(state)
-        setLabels()
-    }
+//    override fun onRestoreInstanceState(state: Parcelable?) {
+//        super.onRestoreInstanceState(state)
+//        setLabels()
+//    }
+
     override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
-        setLabels()
-
+       super.onDraw(canvas)
+       // setLabels()
     }
 
-    private fun setLabels() {
+    public fun setLabels() {
         val yLabelValues = lineGraph.yAxisLabels()
         textViewYLabel01.text = yLabelValues[0]
         textViewYLabel02.text = yLabelValues[1]

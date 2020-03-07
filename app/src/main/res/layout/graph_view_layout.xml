@@ -66,7 +66,7 @@
 
         <TextView
             android:id="@+id/textViewYLabel08"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/y_dp"
             android:layout_height="wrap_content"
             android:text="TextView"
             app:layout_constraintBottom_toTopOf="@+id/view2"
@@ -84,7 +84,7 @@
 
         <TextView
             android:id="@+id/textViewYLabel07"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/y_dp"
             android:layout_height="wrap_content"
             android:text="TextView"
             app:layout_constraintBottom_toTopOf="@+id/view3"
@@ -102,7 +102,7 @@
 
         <TextView
             android:id="@+id/textViewYLabel06"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/y_dp"
             android:layout_height="wrap_content"
             android:text="TextView"
             app:layout_constraintBottom_toTopOf="@+id/view4"
@@ -111,7 +111,7 @@
 
         <FrameLayout
             android:id="@+id/view4"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/y_dp"
             android:layout_height="0dp"
             android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@+id/view5"
@@ -120,7 +120,7 @@
 
         <TextView
             android:id="@+id/textViewYLabel05"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/y_dp"
             android:layout_height="wrap_content"
             android:text="TextView"
             app:layout_constraintBottom_toTopOf="@+id/view5"
@@ -138,7 +138,7 @@
 
         <TextView
             android:id="@+id/textViewYLabel04"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/y_dp"
             android:layout_height="wrap_content"
             android:text="TextView"
             app:layout_constraintBottom_toTopOf="@+id/view6"
@@ -156,7 +156,7 @@
 
         <TextView
             android:id="@+id/textViewYLabel03"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/y_dp"
             android:layout_height="wrap_content"
             android:text="TextView"
             app:layout_constraintBottom_toTopOf="@+id/view7"
@@ -174,7 +174,7 @@
 
         <TextView
             android:id="@+id/textViewYLabel02"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/y_dp"
             android:layout_height="wrap_content"
             android:text="TextView"
             app:layout_constraintBottom_toTopOf="@+id/view8"
@@ -192,7 +192,7 @@
 
         <TextView
             android:id="@+id/textViewYLabel01"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/y_dp"
             android:layout_height="wrap_content"
             android:text="TextView"
             app:layout_constraintBottom_toTopOf="@+id/view9"
@@ -235,7 +235,7 @@
         <FrameLayout
             android:id="@+id/view10"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/x_dp"
             android:visibility="invisible"
             app:layout_constraintEnd_toStartOf="@+id/view11"
             app:layout_constraintHorizontal_bias="0.5"
@@ -245,7 +245,7 @@
         <com.mariasoft.graph.VerticalTextView
             android:id="@+id/textViewXLabel01"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/x_dp"
             android:layout_weight="1"
             android:gravity="top"
             app:layout_constraintEnd_toEndOf="@id/view11"
@@ -256,7 +256,7 @@
         <FrameLayout
             android:id="@+id/view11"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/x_dp"
             android:visibility="invisible"
             app:layout_constraintEnd_toStartOf="@+id/view12"
             app:layout_constraintHorizontal_bias="0.5"
@@ -266,7 +266,7 @@
         <com.mariasoft.graph.VerticalTextView
             android:id="@+id/textViewXLabel02"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/x_dp"
             android:layout_weight="1"
             android:gravity="top"
             app:layout_constraintEnd_toEndOf="@id/view12"
@@ -277,7 +277,7 @@
         <FrameLayout
             android:id="@+id/view12"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/x_dp"
             android:visibility="invisible"
             app:layout_constraintEnd_toStartOf="@+id/view13"
             app:layout_constraintHorizontal_bias="0.5"
@@ -287,7 +287,7 @@
         <com.mariasoft.graph.VerticalTextView
             android:id="@+id/textViewXLabel03"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/x_dp"
             android:layout_weight="1"
             android:gravity="top"
             app:layout_constraintEnd_toEndOf="@id/view13"
@@ -298,7 +298,7 @@
         <FrameLayout
             android:id="@+id/view13"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/x_dp"
             android:visibility="invisible"
             app:layout_constraintEnd_toStartOf="@+id/view14"
             app:layout_constraintHorizontal_bias="0.5"
@@ -308,7 +308,7 @@
         <com.mariasoft.graph.VerticalTextView
             android:id="@+id/textViewXLabel04"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/x_dp"
             android:layout_weight="1"
             android:gravity="top"
             app:layout_constraintEnd_toEndOf="@id/view14"
@@ -319,7 +319,7 @@
         <FrameLayout
             android:id="@+id/view14"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/x_dp"
             android:visibility="invisible"
             app:layout_constraintEnd_toStartOf="@+id/view15"
             app:layout_constraintHorizontal_bias="0.5"
@@ -329,7 +329,7 @@
         <com.mariasoft.graph.VerticalTextView
             android:id="@+id/textViewXLabel05"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/x_dp"
             android:layout_weight="1"
             android:gravity="top"
             app:layout_constraintEnd_toEndOf="@id/view15"
@@ -340,7 +340,7 @@
         <FrameLayout
             android:id="@+id/view15"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/x_dp"
             android:visibility="invisible"
             app:layout_constraintEnd_toStartOf="@+id/view16"
             app:layout_constraintHorizontal_bias="0.5"
@@ -350,7 +350,7 @@
         <com.mariasoft.graph.VerticalTextView
             android:id="@+id/textViewXLabel06"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/x_dp"
             android:layout_weight="1"
             android:gravity="top"
             app:layout_constraintEnd_toEndOf="@id/view16"
@@ -361,7 +361,7 @@
         <FrameLayout
             android:id="@+id/view16"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/x_dp"
             android:visibility="invisible"
             app:layout_constraintEnd_toStartOf="@+id/view17"
             app:layout_constraintHorizontal_bias="0.5"
@@ -371,7 +371,7 @@
         <com.mariasoft.graph.VerticalTextView
             android:id="@+id/textViewXLabel07"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/x_dp"
             android:layout_weight="1"
             android:gravity="top"
             app:layout_constraintEnd_toEndOf="@id/view17"
@@ -382,7 +382,7 @@
         <FrameLayout
             android:id="@+id/view17"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/x_dp"
             android:visibility="invisible"
             app:layout_constraintEnd_toStartOf="@+id/view18"
             app:layout_constraintHorizontal_bias="0.5"
@@ -392,7 +392,7 @@
         <com.mariasoft.graph.VerticalTextView
             android:id="@+id/textViewXLabel08"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/x_dp"
             android:layout_weight="1"
             android:gravity="top"
             app:layout_constraintEnd_toEndOf="@id/view18"
@@ -403,7 +403,7 @@
         <FrameLayout
             android:id="@+id/view18"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/x_dp"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

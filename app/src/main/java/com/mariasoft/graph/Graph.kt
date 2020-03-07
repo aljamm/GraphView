@@ -7,9 +7,10 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
 
-abstract class Graph(context: Context, attributeSet: AttributeSet? = null) : View(context, attributeSet) {
+abstract class Graph(context: Context, attributeSet: AttributeSet? = null) :
+    View(context, attributeSet) {
 
-     val primaryDataSets: MutableList<DataSet> = mutableListOf()
+    val primaryDataSets: MutableList<DataSet> = mutableListOf()
     fun addToPrimaryDataSet(dataSets: List<DataSet>) {
         primaryDataSets.addAll(dataSets)
         invalidate()

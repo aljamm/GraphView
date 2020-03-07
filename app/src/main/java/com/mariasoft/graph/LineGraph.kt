@@ -8,37 +8,114 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import com.mariasoft.graph.DataSet.GraphType.*
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.abs
+import kotlin.math.min
 import kotlin.math.pow
 
 class LineGraph(context: Context, attributeSet: AttributeSet?) : Graph(context, attributeSet) {
 
     override fun xAxisLabels(): List<String> {
         val output = mutableListOf<String>()
-        var valuePerLabel = rangeOfXValues() / 9
-//        val roundingFactor = Math.pow(10.toDouble(), (valuePerLabel.toString().length / 2).toDouble()).toLong()
-        var labelValue = (dataSetMinX) // / roundingFactor) * roundingFactor + roundingFactor
-        // if (labelValue > dataSetMinX) labelValue = (dataSetMinX / roundingFactor) * roundingFactor - roundingFactor
-        output.add(labelValue.toString())
-        for (index in 2..9) {
-            labelValue += valuePerLabel
-            output.add(labelValue.toString())
+//        val valuePerLabel = rangeOfXValues() / 9
+////        val roundingFactor = Math.pow(10.toDouble(), (valuePerLabel.toString().length / 2).toDouble()).toLong()
+//        val labelValue = (dataSetMinX) // / roundingFactor) * roundingFactor + roundingFactor
+//        // if (labelValue > dataSetMinX) labelValue = (dataSetMinX / roundingFactor) * roundingFactor - roundingFactor
+//        output.add(labelValue.toString())
+
+        val value = generateLabel(isXValues = true)
+        value.forEach {
+            output.add(it.toString())
         }
+
+
+//        for (index in 2..9) {
+//            labelValue += valuePerLabel
+//            output.add(labelValue.toString())
+//        }
         return output
     }
 
+    private fun generateLabel(isXValues: Boolean): ArrayList<Long> {
+        val labels = ArrayList<Long>()
+        val maxValues = ArrayList<Long>()
+        val minValues = ArrayList<Long>()
+
+        if (isXValues)
+            primaryDataSets.forEach {
+                maxValues.add(it.xValues.max()!!)
+                minValues.add(it.xValues.min()!!)
+            }
+        else
+            primaryDataSets.forEach {
+                maxValues.add(it.yValues.max() ?: 100)
+                minValues.add(it.yValues.min() ?: 0)
+            }
+        val maxValue = maxValues.max() ?: 100
+        val minValue = minValues.min() ?: 0
+
+        val totalIncrease = (maxValue - minValue) / 6
+        var labelValue: Long = minValue+totalIncrease
+
+        labels.add(minValue)
+        for (index in 1..6) {
+            labels.add(labelValue)
+            labelValue += totalIncrease
+        }
+        labels.add(maxValue)
+
+        return labels
+    }
+
+    private fun generateLabelValues(
+        minValue: Long,
+        rangeOfValues: Long,
+        numberOfLabels: Int
+    ): ArrayList<Int> {
+        val labels = ArrayList<Int>()
+        var valuePerLabel = rangeOfValues / (numberOfLabels + 1)
+        val roundingFactor = Math.pow(10.0, valuePerLabel.toString().length / 2.toDouble()).toInt()
+        valuePerLabel = valuePerLabel / roundingFactor * roundingFactor
+        var initialLabelValue = minValue / roundingFactor * roundingFactor + roundingFactor
+        if (initialLabelValue > minValue - valuePerLabel / 2 && initialLabelValue < minValue + valuePerLabel / 2) {
+            initialLabelValue =
+                (initialLabelValue + valuePerLabel) / roundingFactor * roundingFactor
+        }
+        var labelValue = initialLabelValue.toInt()
+
+        do {
+            labels.add(labelValue)
+            labelValue = labelValue.toInt() + valuePerLabel.toInt()
+        } while (labelValue < minValue + rangeOfValues)
+        return labels
+    }
+
+
     override fun yAxisLabels(): List<String> {
         val output = mutableListOf<String>()
-        var valuePerLabel = rangeOfYValues() / 9
-        val roundingFactor = Math.pow(10.toDouble(), (valuePerLabel.toString().length / 2).toDouble()).toLong()
-        valuePerLabel = (valuePerLabel / roundingFactor) * roundingFactor
-        var labelValue = (dataSetMinY / roundingFactor) * roundingFactor + roundingFactor
-        if (labelValue > dataSetMinY) labelValue = (dataSetMinY / roundingFactor) * roundingFactor - roundingFactor
-        output.add(labelValue.toString())
-        for (index in 2..9) {
-            labelValue += valuePerLabel
-            output.add(labelValue.toString())
+//        var valuePerLabel = rangeOfYValues() / 9
+//        val roundingFactor =
+//            Math.pow(10.toDouble(), (valuePerLabel.toString().length / 2).toDouble()).toLong()
+//        valuePerLabel = (valuePerLabel / roundingFactor) * roundingFactor
+//        var labelValue = (dataSetMinY / roundingFactor) * roundingFactor + roundingFactor
+//        if (labelValue > dataSetMinY) labelValue =
+//            (dataSetMinY / roundingFactor) * roundingFactor - roundingFactor
+//
+//        val value = generateLabelValues(
+//            primaryDataSets[0].xValues.min()!!,
+//            (primaryDataSets[0].xValues.min()!! + primaryDataSets[0].xValues.max()!!) / primaryDataSets[0].xValues.size,
+//            9
+//        )
+        val value = generateLabel(isXValues = false)
+
+        value.forEach {
+            output.add(it.toString())
         }
+//        output.add(labelValue.toString())
+//        for (index in 2..9) {
+//            labelValue += valuePerLabel
+//            output.add(labelValue.toString())
+//        }
         return output
     }
 
@@ -96,7 +173,7 @@ class LineGraph(context: Context, attributeSet: AttributeSet?) : Graph(context, 
         super.onDraw(canvas)
     }
 
-     fun drawDividers(canvas: Canvas?) {
+    fun drawDividers(canvas: Canvas?) {
         val paint = Paint().apply {
             color = Color.GRAY
             strokeWidth = 2f
@@ -112,13 +189,25 @@ class LineGraph(context: Context, attributeSet: AttributeSet?) : Graph(context, 
         }
     }
 
-     fun drawPrimaryDataSets(canvas: Canvas?) {
+    fun drawPrimaryDataSets(canvas: Canvas?) {
         canvas?.run {
             calculateMinMax(primaryDataSets)
             primaryDataSets.forEach { dataSet ->
                 when (dataSet.graphType) {
-                    CYCLIC_LINE -> drawStandardLine(this, dataSet, dataSetMinX, dataSetMinY, rangeOfXValues(), rangeOfYValues())
-                    STANDARD_LINE -> drawUnfoldedLine(canvas, dataSet, dataSetMinY, rangeOfYValues())
+                    CYCLIC_LINE -> drawStandardLine(
+                        this,
+                        dataSet,
+                        dataSetMinX,
+                        dataSetMinY,
+                        rangeOfXValues(),
+                        rangeOfYValues()
+                    )
+                    STANDARD_LINE -> drawUnfoldedLine(
+                        canvas,
+                        dataSet,
+                        dataSetMinY,
+                        rangeOfYValues()
+                    )
                     CONSTANT_LINE -> drawConstantLine(this, dataSet, dataSetMinY, rangeOfYValues())
                     STATE_LINE -> drawStateLine(canvas, dataSet)
                 }
@@ -127,23 +216,39 @@ class LineGraph(context: Context, attributeSet: AttributeSet?) : Graph(context, 
 
     }
 
-    private fun drawStandardLine(canvas: Canvas, dataSet: DataSet, dataSetMinX: Long, dataSetMinY: Long, rangeOfXValues: Long, rangeOfYValues: Long) {
+    private fun drawStandardLine(
+        canvas: Canvas,
+        dataSet: DataSet,
+        dataSetMinX: Long,
+        dataSetMinY: Long,
+        rangeOfXValues: Long,
+        rangeOfYValues: Long
+    ) {
         val pixelsPerX = canvas.width.toFloat() / rangeOfXValues
         val pixelsPerY = canvas.height.toFloat() / rangeOfYValues
 
         for (index in 0 until dataSet.xValues.size - 1) {
             val startX = (dataSet.xValues[index] - dataSetMinX).toFloat() * pixelsPerX
             val stopX = (dataSet.xValues[index + 1] - dataSetMinX).toFloat() * pixelsPerX
-            val startY = canvas.height.toFloat() - (dataSet.yValues[index] - dataSetMinY) * pixelsPerY
-            val stopY = canvas.height.toFloat() - (dataSet.yValues[index + 1] - dataSetMinY) * pixelsPerY
+            val startY =
+                canvas.height.toFloat() - (dataSet.yValues[index] - dataSetMinY) * pixelsPerY
+            val stopY =
+                canvas.height.toFloat() - (dataSet.yValues[index + 1] - dataSetMinY) * pixelsPerY
             canvas.drawLine(startX, startY, stopX, stopY, dataSet.paint)
         }
     }
 
-    private fun drawConstantLine(canvas: Canvas, dataSet: DataSet, dataSetMinY: Long, rangeOfYValues: Long) {
+    private fun drawConstantLine(
+        canvas: Canvas,
+        dataSet: DataSet,
+        dataSetMinY: Long,
+        rangeOfYValues: Long
+    ) {
         val pixelsPerY = canvas.height.toFloat() / rangeOfYValues.toFloat()
-        val startY = canvas.height.toFloat() - (dataSet.yValues[0] - dataSetMinY).toFloat() * pixelsPerY
-        val stopY = canvas.height.toFloat() - (dataSet.yValues[0] - dataSetMinY).toFloat() * pixelsPerY
+        val startY =
+            canvas.height.toFloat() - (dataSet.yValues[0] - dataSetMinY).toFloat() * pixelsPerY
+        val stopY =
+            canvas.height.toFloat() - (dataSet.yValues[0] - dataSetMinY).toFloat() * pixelsPerY
         val stopX = canvas.width.toFloat()
         canvas.drawLine(0F, startY, stopX, stopY, dataSet.paint)
     }
@@ -166,7 +271,12 @@ class LineGraph(context: Context, attributeSet: AttributeSet?) : Graph(context, 
         }
     }
 
-    private fun drawUnfoldedLine(canvas: Canvas, dataSet: DataSet, dataSetMinY: Long, rangeOfYValues: Long) {
+    private fun drawUnfoldedLine(
+        canvas: Canvas,
+        dataSet: DataSet,
+        dataSetMinY: Long,
+        rangeOfYValues: Long
+    ) {
         val pixelsPerX = canvas.width.toFloat() / (dataSet.yValues.size - 1)
         val pixelsPerY = canvas.height.toFloat() / rangeOfYValues
 

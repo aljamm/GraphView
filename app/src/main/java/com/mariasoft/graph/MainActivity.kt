@@ -1,8 +1,15 @@
 package com.mariasoft.graph
 
+import android.app.PendingIntent.getActivity
+import android.graphics.Bitmap
 import android.graphics.Paint
 import android.os.Bundle
+import android.os.Environment
+import android.text.format.DateFormat
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import java.io.File
+import java.io.FileOutputStream
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -424,8 +431,41 @@ class MainActivity : AppCompatActivity() {
         sets.add(dataSet)
 
         val graphView: GraphView = findViewById(R.id.graphView)
+        graphView.isDrawingCacheEnabled = true
 
         graphView.addToPrimaryDataSet(dataSets = sets)
-
+        graphView.setLabels()
     }
+    private fun takeScreenshot() {
+        val now = Date()
+        DateFormat.format("yyyy-MM-dd_hh:mm:ss", now)
+        try {
+
+           // graphViewTop.setDrawingCacheEnabled(true)
+            //graphViewBottom.setDrawingCacheEnabled(true)
+            // image naming and path  to include sd card  appending name you choose for file
+            val mPath =
+                Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg"
+            // create bitmap screen capture
+            val v1: View = window.decorView.rootView
+            v1.isDrawingCacheEnabled = true
+            val bitmap = Bitmap.createBitmap(v1.drawingCache)
+         //   graphViewTop.setDrawingCacheEnabled(false)
+           // graphViewBottom.setDrawingCacheEnabled(false)
+            v1.isDrawingCacheEnabled = false
+            val imageFile = File(mPath)
+            val outputStream = FileOutputStream(imageFile)
+            val quality = 100
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream)
+            outputStream.flush()
+            outputStream.close()
+        } catch (e: Throwable) { // Several error may come out with file handling or DOM
+            e.printStackTrace()
+        }
+    }
+
+    fun take(view: View) {
+        takeScreenshot()
+    }
+
 }

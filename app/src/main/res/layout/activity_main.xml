@@ -9,6 +9,7 @@
 
     <com.mariasoft.graph.GraphView
         android:id="@+id/graphView"
+        android:onClick="take"
         android:layout_width="match_parent"
         android:layout_height="225dp"
         android:background="#00FFFFFF"
